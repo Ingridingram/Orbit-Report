@@ -10,12 +10,10 @@ export class AppComponent implements OnInit {
   title = 'Orbit-Report';
 
   sourceList: Satellite[] = [];
-  displayList: Satellite[];
+  displayList: Satellite[] = [];
+  searchInputValue: string = '';
 
-  constructor() {
-    this.displayList = [];
-  }
-  
+  constructor() {}
 
   ngOnInit() {
     let satellitesUrl = 'https://handlers.education.launchcode.org/static/satellites.json';
@@ -25,9 +23,11 @@ export class AppComponent implements OnInit {
         this.sourceList = data.satellites.map((s) => {
           return new Satellite(s.name, s.type, s.launchDate, s.orbitType, s.operational)
         });
+        this.search('');
       });
     });
   }
+
   search(searchTerm: string): void {
     let matchingSatellites: Satellite[] = [];
     searchTerm = searchTerm.toLowerCase();
